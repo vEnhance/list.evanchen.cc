@@ -2,4 +2,4 @@
 
 This is a minimalistic Django server used to keep track of the public mailing list
 for <https://blog.evanchen.cc>.
-Used to manually manage the emails that give hit on new blog posts.
+Used to manage the emails that get notified about new blog posts.
