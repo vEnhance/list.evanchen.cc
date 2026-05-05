@@ -23,7 +23,7 @@ class SubscriberEmail(models.Model):
     subscribed_wall = models.BooleanField(
         default=False,
         verbose_name="Wall",
-        help_text="Whether the user will get emails for blog.evanchen.cc",
+        help_text="Whether the user will get emails for wall.evanchen.cc",
     )
     is_new = models.BooleanField(
         default=True,
