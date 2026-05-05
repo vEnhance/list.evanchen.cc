@@ -131,6 +131,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SOCIALACCOUNT_AUTO_SIGNUP = True
 
 SUBSCRIBER_LIST_TOKEN_HASH = os.getenv("SUBSCRIBER_LIST_TOKEN_HASH", "")
+SANTA_CODE = os.getenv("SANTA_CODE", "")
 
 LOGGING = {
     "version": 1,

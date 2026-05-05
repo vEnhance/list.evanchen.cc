@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.timezone import now
 
@@ -90,6 +90,15 @@ def _render_confirm(request, action, email):
             "email": email,
         },
     )
+
+
+def hohoho(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=403)
+    email = request.user.email
+    if not SubscriberEmail.objects.filter(email=email, subscribed=True).exists():
+        return HttpResponse(status=403)
+    return HttpResponse(f"Merry Christmas! For otters: {settings.SANTA_CODE}")
 
 
 def subscriber_list(request: HttpRequest) -> JsonResponse:
