@@ -1,0 +1,55 @@
+{% extends "mailing/base.html" %}
+{% block extra_css %}
+    <style>
+    .sub-field {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 12px 0;
+    }
+    .sub-field input[type="checkbox"] {
+        margin-top: 3px;
+        flex-shrink: 0;
+    }
+    .muted {
+        font-size: 85%;
+        color: #777;
+        margin-top: 2px;
+    }
+    </style>
+{% endblock extra_css %}
+{% block content %}
+    <p>
+        You are
+        {% if is_new %}
+            adding
+        {% else %}
+            managing
+        {% endif %}
+        <b>{{ email }}</b>.
+    </p>
+    <hr />
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="sub-field">
+                {{ field }}
+                <div>
+                    <b class="sub-label">{{ field.label }}</b>
+                    {% if field.help_text %}<div class="muted">{{ field.help_text }}</div>{% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit">
+            {% if is_new %}
+                Add subscription
+            {% else %}
+                Update
+            {% endif %}
+        </button>
+    </form>
+    {% if not is_new %}
+        <br />
+        <p class="muted">(To unsubscribe, uncheck all boxes.)</p>
+    {% endif %}
+{% endblock content %}

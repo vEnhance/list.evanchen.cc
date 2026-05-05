@@ -8,11 +8,12 @@ class SubscriberEmailAdmin(admin.ModelAdmin):
     list_display = (
         "email",
         "name",
-        "subscribed",
+        "subscribed_blog",
+        "subscribed_wall",
         "google_authenticated",
         "created_at",
         "custom_greeting",
     )
-    list_filter = ("subscribed", "google_authenticated")
+    list_filter = ("subscribed_blog", "subscribed_wall", "google_authenticated")
     search_fields = ("email",)
     readonly_fields = ("token", "created_at", "updated_at")

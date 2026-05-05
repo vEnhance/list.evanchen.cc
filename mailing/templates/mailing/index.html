@@ -29,15 +29,12 @@
     {% endif %}
     <hr />
     <h2>Subscribe with Google</h2>
-    <p>Use OAuth to avoid "confirm your sub" email.</p>
+    <p>Use your Google account to manage your subscription.</p>
     <ul>
         <li>
-            <a href="{% url 'google_login' %}?next={% url 'oauth_subscribe' %}">Subscribe with Google</a>
+            <a href="{% url 'google_login' %}?next={% url 'oauth_edit' %}">Manage subscription with Google</a>
         </li>
     </ul>
-    <p>
-        (You can also <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">unsubscribe with Google</a>.)
-    </p>
     <hr />
     <h2>Using a non-Google email</h2>
     <p>
@@ -64,10 +61,7 @@
             </td>
         </tr>
     </table>
-    <p>
-        To unsubscribe, use <code>remove</code> instead of <code>add</code> in the subject line.
-        Alternatively, every email sent contains a user-specific unsubscribe link.
-    </p>
+    <p>Alternatively, every email sent contains a user-specific link.</p>
     <hr />
     <h2>Technical details</h2>
     <p>

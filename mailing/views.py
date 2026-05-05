@@ -3,91 +3,90 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.timezone import now
 
+from .forms import EditSubscriptionForm
 from .models import SubscriberEmail
-
-_DONE_TITLES = {
-    "subscribed": "Subscribed",
-    "unsubscribed": "Unsubscribed",
-    "already_subscribed": "Already subscribed",
-    "not_found": "Not found",
-}
-
-_CONFIRM_TITLES = {
-    "subscribe": "Confirm subscription",
-    "unsubscribe": "Confirm unsubscription",
-}
 
 
 def index(request):
     return render(request, "mailing/index.html", {"page_title": "Evan's mailing list"})
 
 
-def unsubscribe_by_token(request, token):
+def edit_by_token(request, token):
     try:
         obj = SubscriberEmail.objects.get(token=token)
     except SubscriberEmail.DoesNotExist:
         return render(request, "mailing/bad_token.html", {"page_title": "Link invalid"})
     if request.method == "POST":
-        obj.subscribed = False
-        obj.save()
-        return _render_done(request, "unsubscribed", obj.email)
-    return _render_confirm(request, "unsubscribe", obj.email)
-
-
-@login_required
-def oauth_subscribe(request):
-    email = request.user.email
-    if request.method == "POST":
-        obj, _ = SubscriberEmail.objects.get_or_create(email=email)
-        obj.subscribed = True
-        obj.google_authenticated = True
-        if not obj.name:
-            obj.name = request.user.get_full_name()
-        obj.save()
-        return _render_done(request, "subscribed", email)
-    elif SubscriberEmail.objects.filter(email=email, subscribed=True).exists():
-        return _render_done(request, "already_subscribed", email)
-
-    return _render_confirm(request, "subscribe", email)
-
-
-@login_required
-def oauth_unsubscribe(request):
-    email = request.user.email
-    if request.method == "POST":
-        try:
-            obj = SubscriberEmail.objects.get(email=email)
-            obj.subscribed = False
-            obj.save()
-            action = "unsubscribed"
-        except SubscriberEmail.DoesNotExist:
-            action = "not_found"
-        return _render_done(request, action, email)
-    return _render_confirm(request, "unsubscribe", email)
-
-
-def _render_done(request, action, email):
+        form = EditSubscriptionForm(request.POST, instance=obj)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.is_new = False
+            instance.save()
+            return render(
+                request,
+                "mailing/edit_done.html",
+                {
+                    "page_title": "Form saved",
+                    "email": obj.email,
+                    "form": EditSubscriptionForm(instance=obj),
+                    "back_url": reverse("edit_by_token", args=[token]),
+                },
+            )
+    else:
+        form = EditSubscriptionForm(instance=obj)
+    page_title = "New subscription" if obj.is_new else "Edit subscription"
     return render(
         request,
-        "mailing/done.html",
+        "mailing/edit_form.html",
         {
-            "page_title": _DONE_TITLES.get(action, "Done"),
-            "action": action,
-            "email": email,
+            "page_title": page_title,
+            "form": form,
+            "email": obj.email,
+            "is_new": obj.is_new,
         },
     )
 
 
-def _render_confirm(request, action, email):
+@login_required
+def oauth_edit(request):
+    email = request.user.email
+    obj, _ = SubscriberEmail.objects.get_or_create(email=email)
+    if request.method == "POST":
+        form = EditSubscriptionForm(request.POST, instance=obj)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.google_authenticated = True
+            instance.is_new = False
+            if not instance.name:
+                instance.name = request.user.get_full_name()
+            instance.save()
+            return render(
+                request,
+                "mailing/edit_done.html",
+                {
+                    "page_title": "Form saved",
+                    "email": email,
+                    "form": EditSubscriptionForm(instance=obj),
+                    "back_url": reverse("oauth_edit"),
+                },
+            )
+    else:
+        if obj.is_new:
+            obj.subscribed_blog = (
+                True  # default display before first save; not written to DB
+            )
+        form = EditSubscriptionForm(instance=obj)
     return render(
         request,
-        "mailing/confirm_action.html",
+        "mailing/edit_form.html",
         {
-            "page_title": _CONFIRM_TITLES[action],
-            "action": action,
+            "page_title": "New subscription" if obj.is_new else "Edit subscription",
+            "form": form,
             "email": email,
+            "is_new": obj.is_new,
         },
     )
 
@@ -96,12 +95,12 @@ def hohoho(request):
     if not request.user.is_authenticated:
         return HttpResponse(status=403)
     email = request.user.email
-    if not SubscriberEmail.objects.filter(email=email, subscribed=True).exists():
+    if not SubscriberEmail.objects.filter(email=email, subscribed_blog=True).exists():
         return HttpResponse(status=403)
     return HttpResponse(f"Merry Christmas! For otters: {settings.SANTA_CODE}")
 
 
-def subscriber_list(request: HttpRequest) -> JsonResponse:
+def _subscriber_list_view(request: HttpRequest, filter_kwargs: dict) -> JsonResponse:
     if request.method != "GET":
         return JsonResponse({"error": "Method not allowed"}, status=405)
     expected_hash = settings.SUBSCRIBER_LIST_TOKEN_HASH
@@ -114,8 +113,16 @@ def subscriber_list(request: HttpRequest) -> JsonResponse:
     if not check_password(provided_token, expected_hash):
         return JsonResponse({"error": "Forbidden"}, status=403)
     subscribers = list(
-        SubscriberEmail.objects.filter(subscribed=True).values(
+        SubscriberEmail.objects.filter(**filter_kwargs).values(
             "email", "token", "name", "custom_greeting"
         )
     )
     return JsonResponse({"timestamp": now().isoformat(), "subscribers": subscribers})
+
+
+def subscriber_list_blog(request: HttpRequest) -> JsonResponse:
+    return _subscriber_list_view(request, {"subscribed_blog": True})
+
+
+def subscriber_list_wall(request: HttpRequest) -> JsonResponse:
+    return _subscriber_list_view(request, {"subscribed_wall": True})

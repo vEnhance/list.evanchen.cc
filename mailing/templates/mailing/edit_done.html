@@ -1,0 +1,44 @@
+{% extends "mailing/base.html" %}
+{% block extra_css %}
+    <style>
+    .sub-field {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 12px 0;
+    }
+    .muted {
+        font-size: 85%;
+        color: #777;
+        margin-top: 2px;
+    }
+    .emoji {
+        font-size: 120%;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    </style>
+{% endblock extra_css %}
+{% block content %}
+    <p>
+        The status for <b>{{ email }}</b> is now:
+    </p>
+    {% for field in form %}
+        <div class="sub-field">
+            <div class="emoji">
+                {% if field.value %}
+                    ✅
+                {% else %}
+                    ✖️
+                {% endif %}
+            </div>
+            <div>
+                <b class="sub-label">{{ field.label }}</b>
+                {% if field.help_text %}<div class="muted">{{ field.help_text }}</div>{% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    <p>
+        <a href="{{ edit_url }}">Edit again</a>
+    </p>
+{% endblock content %}
