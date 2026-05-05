@@ -11,11 +11,7 @@ urlpatterns = [
         RedirectView.as_view(pattern_name="edit_by_token"),
     ),
     path("oauth/edit/", views.oauth_edit, name="oauth_edit"),
-    path(
-        "api/subscribers/blog/", views.subscriber_list_blog, name="subscriber_list_blog"
-    ),
-    path(
-        "api/subscribers/wall/", views.subscriber_list_wall, name="subscriber_list_wall"
-    ),
+    path("api/subs/blog/", views.subscriber_list_blog, name="subscriber_list_blog"),
+    path("api/subs/wall/", views.subscriber_list_wall, name="subscriber_list_wall"),
     path("hohoho/", views.hohoho),
 ]
