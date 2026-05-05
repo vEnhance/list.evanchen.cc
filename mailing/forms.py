@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.safestring import mark_safe
 
 from .models import SubscriberEmail
 
@@ -8,8 +9,12 @@ class EditSubscriptionForm(forms.ModelForm):
         model = SubscriberEmail
         fields = ["subscribed_blog", "subscribed_wall"]
         labels = {
-            "subscribed_blog": "blog.evanchen.cc",
-            "subscribed_wall": "wall.evanchen.cc",
+            "subscribed_blog": mark_safe(
+                '<a href="https://blog.evanchen.cc">blog.evanchen.cc</a>'
+            ),
+            "subscribed_wall": mark_safe(
+                '<a href="https://wall.evanchen.cc">wall.evanchen.cc</a>'
+            ),
         }
         help_texts = {
             "subscribed_blog": "Long posts every 1-3 months. Probably what you want.",
