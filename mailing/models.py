@@ -14,10 +14,10 @@ class SubscriberEmail(models.Model):
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    subscribed_blog = models.BooleanField(default=False)
-    subscribed_wall = models.BooleanField(default=False)
+    subscribed_blog = models.BooleanField(default=False, verbose_name="Blog")
+    subscribed_wall = models.BooleanField(default=False, verbose_name="Wall")
     is_new = models.BooleanField(default=True)
-    google_authenticated = models.BooleanField(default=False)
+    google_authenticated = models.BooleanField(default=False, verbose_name="Google")
     token = models.CharField(max_length=24, unique=True, default=generate_token)
     name = models.CharField(max_length=255, blank=True)
     custom_greeting = models.TextField(
