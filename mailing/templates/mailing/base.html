@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,20 +7,7 @@
         <meta name="description" content="Mailing list server for blog.evanchen.cc">
         <meta name="keywords" content="evan chen, blog, mailing list">
         <title>{{ page_title|default:"Evan's mailing list" }}</title>
-        <style type="text/css">
-            main {
-                max-width: 512px;
-                margin: 0 auto;
-            }
-            #foot-divider {
-                margin-top: 30px;
-            }
-            body {
-                background-color: #f9fffa;
-            }
-        </style>
-        {% block extra_css %}
-        {% endblock extra_css %}
+        <link rel="stylesheet" href="{% static 'mailing.css' %}" />
         <link rel="apple-touch-icon"
               sizes="180x180"
               href="//web.evanchen.cc/static/icons/apple-touch-icon.png" />

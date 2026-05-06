@@ -1,24 +1,4 @@
 {% extends "mailing/base.html" %}
-{% block extra_css %}
-    <style>
-    .sub-field {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        margin: 12px 0;
-    }
-    .muted {
-        font-size: 85%;
-        color: #777;
-        margin-top: 2px;
-    }
-    .emoji {
-        font-size: 120%;
-        flex-shrink: 0;
-        margin-top: 1px;
-    }
-    </style>
-{% endblock extra_css %}
 {% block content %}
     <p>
         The status for <b>{{ email }}</b> is now:
