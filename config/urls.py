@@ -32,3 +32,7 @@ urlpatterns = [
     ),
     path("", include("mailing.urls")),
 ]
+
+admin.site.site_header = "Evan's Post Office"
+admin.site.index_title = "Switchboard"
+admin.site.site_title = "Evan's Post Office"
