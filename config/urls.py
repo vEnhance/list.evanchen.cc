@@ -24,7 +24,7 @@ urlpatterns = [
     path("accounts/", include("allauth.socialaccount.providers.google.urls")),
     path(
         "robots.txt",
-        lambda r: HttpResponse("User-agent: *\nAllow: /\n", content_type="text/plain"),
+        lambda _: HttpResponse("User-agent: *\nAllow: /\n", content_type="text/plain"),
     ),
     path(
         r"favicon.ico",
