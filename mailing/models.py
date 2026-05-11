@@ -2,6 +2,7 @@ import secrets
 import string
 
 from django.db import models
+from django.urls import reverse
 
 ALPHABET = string.ascii_letters + string.digits
 
@@ -43,3 +44,6 @@ class SubscriberEmail(models.Model):
 
     def __str__(self):
         return self.email
+
+    def get_absolute_url(self):
+        return reverse("edit_by_token", args=[self.token])
