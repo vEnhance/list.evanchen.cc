@@ -132,6 +132,12 @@ def test_oauth_edit_post_saves(auth_client, user):
     assert obj.subscribed_wall is True
 
 
+def test_oauth_edit_get_sets_google_authenticated(auth_client, user):
+    auth_client.get(reverse("oauth_edit"))
+    obj = SubscriberEmail.objects.get(email=user.email)
+    assert obj.google_authenticated is True
+
+
 def test_oauth_edit_post_sets_google_authenticated(auth_client, user):
     SubscriberEmail.objects.create(email=user.email, google_authenticated=False)
     auth_client.post(

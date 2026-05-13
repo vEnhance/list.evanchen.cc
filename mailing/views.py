@@ -54,11 +54,13 @@ def edit_by_token(request, token):
 def oauth_edit(request):
     email = request.user.email
     obj, _ = SubscriberEmail.objects.get_or_create(email=email)
+    if not obj.google_authenticated:
+        obj.google_authenticated = True
+        obj.save()
     if request.method == "POST":
         form = EditSubscriptionForm(request.POST, instance=obj)
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.google_authenticated = True
             instance.is_new = False
             if not instance.name:
                 instance.name = request.user.get_full_name()
