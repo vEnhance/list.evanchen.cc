@@ -2,7 +2,7 @@
 {% block content %}
     <p>
         Howdy.
-        This is the public mailing list for my blogs.
+        This is the public mailing list for my two blogs.
     </p>
     {% if request.user.is_superuser %}
         <p>
@@ -10,11 +10,14 @@
         </p>
     {% endif %}
     <hr />
-    <h2>Subscribe with Google</h2>
-    <p>Use your Google account to manage your subscription.</p>
+    <h2>Add a Google email</h2>
+    <p>
+        If you can sign in with Google, this is the easy way to add yourself
+        (or update your existing settings).
+    </p>
     <ul>
         <li>
-            <a href="{% url 'google_login' %}?next={% url 'oauth_edit' %}">Manage subscription with Google</a>
+            <a href="{% url 'google_login' %}?next={% url 'oauth_edit' %}">Sign in with Google</a>
         </li>
     </ul>
     <hr />

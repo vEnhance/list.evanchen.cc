@@ -37,7 +37,7 @@ def edit_by_token(request, token):
             )
     else:
         form = EditSubscriptionForm(instance=obj)
-    page_title = "New subscription" if obj.is_new else "Edit subscription"
+    page_title = "Add a new email" if obj.is_new else "Edit email settings"
     return render(
         request,
         "mailing/edit_form.html",
@@ -85,7 +85,7 @@ def oauth_edit(request):
         request,
         "mailing/edit_form.html",
         {
-            "page_title": "New subscription" if obj.is_new else "Edit subscription",
+            "page_title": "Add a new email" if obj.is_new else "Edit email settings",
             "form": form,
             "email": email,
             "is_new": obj.is_new,

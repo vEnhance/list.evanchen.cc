@@ -1,13 +1,12 @@
 {% extends "mailing/base.html" %}
 {% block content %}
     <p>
-        You are
         {% if is_new %}
-            adding
+            You're about to add <b>{{ email }}</b> for the first time.
+            Use the form below to confirm.
         {% else %}
-            managing
+            You are about editing settings for <b>{{ email }}</b>.
         {% endif %}
-        <b>{{ email }}</b>.
     </p>
     <hr />
     <form method="post">
@@ -23,7 +22,7 @@
         {% endfor %}
         <button type="submit">
             {% if is_new %}
-                Add subscription
+                Confirm
             {% else %}
                 Update
             {% endif %}
