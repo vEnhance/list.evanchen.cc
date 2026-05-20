@@ -34,7 +34,7 @@ prod = [
 
 [dependency-groups]
 dev = [
-    "prek>=0.3.13",
+    "prek>=0.4.1",
     "pyright>=1.1.409",
     "pytest>=9.0.3",
     "pytest-django>=4.12.0",
