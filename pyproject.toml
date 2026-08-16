@@ -27,6 +27,11 @@ python_functions = ["test_*"]
 [tool.djlint]
 profile = "django"
 
+[tool.ruff.lint.per-file-ignores]
+# RUF012: `dependencies` and `operations` are written by `makemigrations`, so
+# any ClassVar annotation we add here would be lost on the next regeneration.
+"*/migrations/*.py" = ["RUF012"]
+
 [project.optional-dependencies]
 prod = [
     "mysqlclient>=2.2.8",
