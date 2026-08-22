@@ -173,14 +173,14 @@ socialaccount = [
 
 [[package]]
 name = "django-discordo"
-version = "1.1.0"
+version = "1.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b7/a1/d4727f0addcf9b88456cd3d9d7330226ec8c51ba9c3d62ef373a09624ce0/django_discordo-1.1.0.tar.gz", hash = "sha256:3cf7605b15320f41538ee975e9b428c451370299fda581dd64d3ac5d54f40852", size = 5905, upload-time = "2026-08-07T22:51:51.351Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ba/6a/d85351bda01800b88abc48fed1470a340661d5bbcde2a8930ccd9237bfeb/django_discordo-1.2.0.tar.gz", hash = "sha256:f33efd52c3378cd770ff38640243e81c70a3f815136f4027ac529d25d87a2582", size = 8194, upload-time = "2026-08-22T03:27:18.83Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f8/33/f3d39a2eae007f50d540f718760256945e5d3903a4c9d07963f6f6ef19e2/django_discordo-1.1.0-py3-none-any.whl", hash = "sha256:76aaa53ae3296ef0eca0987abcc929e874c2371261251182ffb551dab527ba07", size = 6628, upload-time = "2026-08-07T22:51:50.094Z" },
+    { url = "https://files.pythonhosted.org/packages/88/cd/fa2956debc7a7dccd23ddea4a14e08a46dc3c49471a55b34f57f4217c91d/django_discordo-1.2.0-py3-none-any.whl", hash = "sha256:011c58b00ddef885bcd2c24f3127008d17ee760aba99aa8814eed396d2ee0acd", size = 8969, upload-time = "2026-08-22T03:27:17.643Z" },
 ]
 
 [[package]]
@@ -225,11 +225,11 @@ wheels = [
 
 [[package]]
 name = "idna"
-version = "3.18"
+version = "3.19"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/cd/63/9496c57188a2ee585e0f1db071d75089a11e98aa86eb99d9d7618fc1edce/idna-3.18.tar.gz", hash = "sha256:ffb385a7e039654cef1ab9ef32c6fafe283c0c0467bba1d9029738ce4a14a848", size = 196711, upload-time = "2026-06-02T14:34:07.794Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5f/f7/abb373e5757eaec4b922b92f97ec8d6d7e057cf06778247604fbc4e7c3f3/idna-3.19.tar.gz", hash = "sha256:5e0811a4383b21dc5838069f801c4fb62113b7447663d2530d2bd6e77b49bf15", size = 215237, upload-time = "2026-08-18T05:14:24.27Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1e/5e/d4e9f1a599fb8e573b7b87160658329fbf28d19eac2718f51fc3def3aa5a/idna-3.18-py3-none-any.whl", hash = "sha256:7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2", size = 65455, upload-time = "2026-06-02T14:34:06.319Z" },
+    { url = "https://files.pythonhosted.org/packages/57/b0/0e52c878c53f245edd3a11020f20979b3f490f245af532c7cae3027754b5/idna-3.19-py3-none-any.whl", hash = "sha256:815e7be7a7806d54abb586dc943addc79e8b2ee16915059658cbeff4b1b43bf4", size = 68550, upload-time = "2026-08-18T05:14:22.343Z" },
 ]
 
 [[package]]
@@ -272,7 +272,7 @@ dev = [
 requires-dist = [
     { name = "django", specifier = ">=6.0.8,<6.1" },
     { name = "django-allauth", extras = ["socialaccount"], specifier = ">=65.19.1" },
-    { name = "django-discordo", specifier = ">=1.1.0" },
+    { name = "django-discordo", specifier = ">=1.2.0" },
     { name = "django-extensions", specifier = ">=4.1" },
     { name = "django-stubs", specifier = ">=6.1.0" },
     { name = "mysqlclient", marker = "extra == 'prod'", specifier = ">=2.2.8" },
